@@ -22,13 +22,13 @@ app.use(express.json());
 
 // ✅ CORS — Allow all (for now)
 app.use(
-  cors({
-    origin: "*",
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
+    cors({
+      origin: ["http://localhost:3000", "https://olympics-frontend.vercel.app/"],
+      credentials: true,
+      methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+      allowedHeaders: ["Content-Type", "Authorization"],
+    })
+  );
 
 // ✅ Ensure DB connection before handling routes
 app.use(async (req, res, next) => {
