@@ -23,7 +23,7 @@ app.use(express.json());
 // ✅ CORS — Allow all (for now)
 app.use(
     cors({
-      origin: ["http://localhost:3000", "https://olympics-frontend.vercel.app"],
+      origin: ["http://localhost:3000", "http://localhost:3001","https://olympics-frontend.vercel.app"],
       credentials: true,
       methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
       allowedHeaders: ["Content-Type", "Authorization"],
