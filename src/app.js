@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors")
-require("../src/db/conn")
+const connectToDatabase = require("../src/db/conn")
 
 const mensRouter = require("./routers/mens")
 const authRouter = require("./routers/auth")
@@ -24,6 +24,18 @@ app.use(cors({
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"]
 }))
+
+// Middleware to ensure database connection
+app.use(async (req, res, next) => {
+    try {
+        await connectToDatabase();
+        next();
+    } catch (error) {
+        console.error("Database connection failed:", error);
+        res.status(500).send({ success: false, error: "Database connection failed" });
+    }
+});
+
 // handle invalid JSON in request body (applies to routes that use express.json())
 app.use((err, req, res, next) => {
     
@@ -47,10 +59,12 @@ app.use("/api", dashboardRouter)
 app.use("/api", eventRouter)
 
 
-app.get("/", async (req, res) => {
-    res.send("hy hello")
-})
+// app.get("/", async (req, res) => {
+//     res.send("hy hello")
+// })
 
-app.listen(port, () => {
-    console.log(`connection is live at port no. ${port}`)
-})
+// app.listen(port, () => {
+//     console.log(`connection is live at port no. ${port}`)
+// })
+
+module.exports = app;
